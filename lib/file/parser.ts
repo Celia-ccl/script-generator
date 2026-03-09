@@ -1,7 +1,15 @@
 import Tesseract from 'tesseract.js';
-import pdfParse from 'pdf-parse';
 import mammoth from 'mammoth';
 import { FileParseResult } from '@/types/script';
+
+// 动态导入 pdf-parse 以避免客户端打包问题
+async function getPDFParser() {
+  if (typeof window !== 'undefined') {
+    throw new Error('PDF parsing is not available on the client side');
+  }
+  const pdfParse = await import('pdf-parse');
+  return pdfParse;
+}
 
 /**
  * 文件解析工具类
@@ -72,9 +80,10 @@ export class FileParser {
    */
   private static async parsePDF(file: File): Promise<FileParseResult> {
     try {
+      const pdfParse = await getPDFParser();
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
-      const data = await pdfParse(buffer);
+      const data = await (pdfParse as any)(buffer);
 
       return {
         fileName: file.name,

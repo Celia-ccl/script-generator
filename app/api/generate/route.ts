@@ -64,6 +64,7 @@ export async function POST(request: NextRequest) {
 
     // 构建请求参数
     const generateRequest = {
+      model,
       theme,
       customTheme,
       style,
