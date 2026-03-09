@@ -47,18 +47,16 @@ export class FileParser {
 
   /**
    * 解析图片（使用 OCR）
+   * 注意：图片 OCR 功能暂时禁用，以确保在 Vercel 上的稳定部署
    */
   private static async parseImage(file: File): Promise<FileParseResult> {
     try {
-      const result = await Tesseract.recognize(file, 'chi_sim+eng', {
-        logger: (m: any) => console.log(m),
-      });
-
+      // 暂时返回占位符文本，避免 tesseract.js 的兼容性问题
       return {
         fileName: file.name,
         fileType: 'image',
-        text: result.data.text.trim(),
-        extractedContent: result.data.text.trim(),
+        text: '图片文件内容暂时无法自动解析。请使用 PDF 或 Word 文档，或者手动输入内容。',
+        extractedContent: '图片文件内容暂时无法自动解析。请使用 PDF 或 Word 文档，或者手动输入内容。',
       };
     } catch (error) {
       console.error('Image parsing error:', error);
