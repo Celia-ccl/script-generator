@@ -23,6 +23,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // 添加调试信息
+    console.log('File received:', {
+      name: file.name,
+      type: file.type,
+      size: file.size
+    });
+
     // 解析文件内容
     const parseResult = await FileParser.parseFile(file);
 

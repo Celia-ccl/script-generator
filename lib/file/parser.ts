@@ -2,13 +2,13 @@ import Tesseract from 'tesseract.js';
 import mammoth from 'mammoth';
 import { FileParseResult } from '@/types/script';
 
-// 动态导入 pdf-parse 以避免客户端打包问题
+// 动态导入 pdfjs-dist 以避免客户端打包问题
 async function getPDFParser() {
   if (typeof window !== 'undefined') {
     throw new Error('PDF parsing is not available on the client side');
   }
-  const pdfParse = await import('pdf-parse');
-  return pdfParse;
+  const { default: pdfjs } = await import('pdfjs-dist');
+  return pdfjs;
 }
 
 /**
@@ -80,20 +80,53 @@ export class FileParser {
    */
   private static async parsePDF(file: File): Promise<FileParseResult> {
     try {
-      const pdfParse = await getPDFParser();
+      // 确保在服务端运行
+      if (typeof window !== 'undefined') {
+        throw new Error('PDF parsing must be done on the server side');
+      }
+
+      const pdfjsLib = await getPDFParser();
+
+      // 在服务端处理文件
+      if (!(file instanceof File)) {
+        throw new Error('Invalid file object');
+      }
+
+      // 设置 pdfjs-dist 的工作者
+      (pdfjsLib as any).GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js`;
+
+      // 读取文件内容
       const arrayBuffer = await file.arrayBuffer();
-      const buffer = Buffer.from(arrayBuffer);
-      const data = await (pdfParse as any)(buffer);
+
+      // 加载 PDF 文档
+      const loadingTask = pdfjsLib.getDocument(arrayBuffer);
+      const pdf = await loadingTask.promise;
+
+      // 提取所有页面的文本
+      let fullText = '';
+      const numPages = pdf.numPages;
+
+      for (let i = 1; i <= numPages; i++) {
+        const page = await pdf.getPage(i);
+        const textContent = await page.getTextContent();
+
+        // 提取页面中的文本项
+        const pageText = textContent.items
+          .map((item: any) => item.str)
+          .join(' ');
+
+        fullText += pageText + '\n';
+      }
 
       return {
         fileName: file.name,
         fileType: 'pdf',
-        text: data.text.trim(),
-        extractedContent: data.text.trim(),
+        text: fullText.trim(),
+        extractedContent: fullText.trim(),
       };
     } catch (error) {
       console.error('PDF parsing error:', error);
-      throw new Error('Failed to parse PDF');
+      throw new Error('Failed to parse PDF: ' + (error instanceof Error ? error.message : String(error)));
     }
   }
 
