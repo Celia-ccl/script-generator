@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { ScriptForm } from '@/components/ScriptForm';
-import { ScriptPreview } from '@/components/ScriptPreview';
-import { ScriptData } from '@/types/script';
+import { ScriptForm } from '../components/ScriptForm';
+import { ScriptPreview } from '../components/ScriptPreview';
+import { ScriptData } from '../types/script';
 import { Sparkles } from 'lucide-react';
 
 export default function Home() {

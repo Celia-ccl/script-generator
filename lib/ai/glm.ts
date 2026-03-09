@@ -6,7 +6,7 @@ import {
   ScriptData,
   ScriptScene,
   ContentDirection,
-} from '@/types/script';
+} from '../../types/script';
 
 /**
  * GLM-4 AI 服务实现

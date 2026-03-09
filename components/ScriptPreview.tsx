@@ -3,8 +3,8 @@ import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Label } from './ui/label';
-import { ScriptData, ScriptScene } from '@/types/script';
-import { ExcelExporter } from '@/lib/file/excel-exporter';
+import { ScriptData, ScriptScene } from '../types/script';
+import { ExcelExporter } from '../lib/file/excel-exporter';
 import {
   Download,
   RefreshCw,

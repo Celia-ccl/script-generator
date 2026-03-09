@@ -1,6 +1,6 @@
 import Tesseract from 'tesseract.js';
 import mammoth from 'mammoth';
-import { FileParseResult } from '@/types/script';
+import { FileParseResult } from '../../types/script';
 
 /**
  * 文件解析工具类

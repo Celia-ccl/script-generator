@@ -1,5 +1,5 @@
 import * as XLSX from 'xlsx';
-import { ScriptData, ScriptScene } from '@/types/script';
+import { ScriptData, ScriptScene } from '../../types/script';
 
 /**
  * Excel 导出工具类

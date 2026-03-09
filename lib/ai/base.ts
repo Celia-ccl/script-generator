@@ -1,4 +1,4 @@
-import { AIModel, GenerateScriptRequest, ScriptData, ContentDirection } from '@/types/script';
+import { AIModel, GenerateScriptRequest, ScriptData, ContentDirection } from '../../types/script';
 
 /**
  * AI 服务基类

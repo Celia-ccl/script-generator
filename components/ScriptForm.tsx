@@ -7,7 +7,7 @@ import { Label } from './ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { ModelSelector } from './ModelSelector';
 import { FileUploader } from './FileUploader';
-import { ContentDirection, VlogTheme, SpeakingStyle, FileParseResult } from '@/types/script';
+import { ContentDirection, VlogTheme, SpeakingStyle, FileParseResult } from '../types/script';
 import { Loader2, Sparkles, FileText } from 'lucide-react';
 
 interface ScriptFormProps {

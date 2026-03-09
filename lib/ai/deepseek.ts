@@ -5,7 +5,7 @@ import {
   GenerateScriptRequest,
   ScriptData,
   ContentDirection,
-} from '@/types/script';
+} from '../../types/script';
 
 /**
  * DeepSeek-V3 AI 服务实现

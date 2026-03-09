@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Select } from './ui/select';
-import { ModelConfig } from '@/types/script';
+import { ModelConfig } from '../types/script';
 import { Cpu } from 'lucide-react';
 
 interface ModelSelectorProps {

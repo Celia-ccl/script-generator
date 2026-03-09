@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { ModelConfig } from '@/types/script';
+import { ModelConfig } from '../../../types/script';
 
 /**
  * GET /api/models
