@@ -2,15 +2,6 @@ import Tesseract from 'tesseract.js';
 import mammoth from 'mammoth';
 import { FileParseResult } from '@/types/script';
 
-// 动态导入 pdf-to-text 以避免客户端打包问题
-async function getPDFParser() {
-  if (typeof window !== 'undefined') {
-    throw new Error('PDF parsing is not available on the client side');
-  }
-  const pdfToText = await import('pdf-to-text');
-  return pdfToText;
-}
-
 /**
  * 文件解析工具类
  * 支持：图片（OCR）、PDF、Word 文档的文本提取
@@ -77,41 +68,16 @@ export class FileParser {
 
   /**
    * 解析 PDF
+   * 注意：PDF 解析功能暂时禁用，以确保在 Vercel 上的稳定部署
    */
   private static async parsePDF(file: File): Promise<FileParseResult> {
     try {
-      // 确保在服务端运行
-      if (typeof window !== 'undefined') {
-        throw new Error('PDF parsing must be done on the server side');
-      }
-
-      const pdfToText = await getPDFParser();
-
-      // 在服务端处理文件
-      if (!(file instanceof File)) {
-        throw new Error('Invalid file object');
-      }
-
-      // 读取文件内容
-      const arrayBuffer = await file.arrayBuffer();
-      const buffer = Buffer.from(arrayBuffer);
-
-      // 使用 pdf-to-text 提取文本
-      const text = await new Promise<string>((resolve, reject) => {
-        (pdfToText as any)(buffer, (error: Error, text: string) => {
-          if (error) {
-            reject(error);
-          } else {
-            resolve(text);
-          }
-        });
-      });
-
+      // 暂时返回占位符文本，避免 PDF 解析库的兼容性问题
       return {
         fileName: file.name,
         fileType: 'pdf',
-        text: text.trim(),
-        extractedContent: text.trim(),
+        text: 'PDF 文件内容暂时无法自动解析。请使用图片或 Word 文档，或者手动输入内容。',
+        extractedContent: 'PDF 文件内容暂时无法自动解析。请使用图片或 Word 文档，或者手动输入内容。',
       };
     } catch (error) {
       console.error('PDF parsing error:', error);

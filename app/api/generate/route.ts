@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GLMService } from '@/lib/ai/glm';
-import { DeepSeekService } from '@/lib/ai/deepseek';
+import { GLMService } from '../../../lib/ai/glm';
+import { DeepSeekService } from '../../../lib/ai/deepseek';
 
 /**
  * POST /api/generate

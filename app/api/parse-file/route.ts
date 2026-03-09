@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { FileParser } from '@/lib/file/parser';
-import { GLMService } from '@/lib/ai/glm';
-import { DeepSeekService } from '@/lib/ai/deepseek';
+import { FileParser } from '../../../lib/file/parser';
+import { GLMService } from '../../../lib/ai/glm';
+import { DeepSeekService } from '../../../lib/ai/deepseek';
 
 /**
  * POST /api/parse-file
